@@ -50,8 +50,25 @@ function handleReplyClick(replyId){
   tweetReplies.classList.toggle("hidden");
 }
 
-function handleTweetBtnClick(){
-  console.log(tweetInput.value)
+function handleTweetBtnClick() {
+
+  if(tweetInput.value) {
+    
+    tweetsData.unshift({
+        handle: `@MeTweeting🥸`,
+        profilePic: `../images/scrimbalogo.png`,
+        likes: 0,
+        retweets: 0,
+        tweetText: tweetInput.value,
+        replies: [],
+        isLiked: false,
+        isRetweeted: false,
+        uuid: uuidv4(),
+    });
+
+    renderTweet()
+  }
+
   tweetInput.value = ''
 }
 
