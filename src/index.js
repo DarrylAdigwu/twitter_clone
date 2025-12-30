@@ -8,6 +8,44 @@ tweetBtn.addEventListener("click", function(){
   console.log(tweetInputValue)
 });
 
+document.addEventListener("click", function(e){
+  if(e.target.dataset.like) {
+    handleLikeClick(e.target.dataset.like)
+  }
+
+  if(e.target.dataset.retweet) {
+    handleRetweetClick(e.target.dataset.retweet)
+  }
+})
+
+function handleLikeClick(tweetId) {
+  const targetTweetObj = tweetsData.find  ((tweet) => tweet.uuid === tweetId);
+
+  if(targetTweetObj.isLiked) {
+    targetTweetObj.likes--;
+  } else {
+    targetTweetObj.likes++;
+  }
+
+  targetTweetObj.isLiked = !targetTweetObj.isLiked
+  
+  renderTweet()
+}
+
+function handleRetweetClick(tweetId) {
+  const targetTweetObj = tweetsData.find  ((tweet) => tweet.uuid === tweetId);
+
+  if(targetTweetObj.isRetweeted) {
+    targetTweetObj.retweets--;
+  } else {
+    targetTweetObj.retweets++;
+  }
+
+  targetTweetObj.isRetweeted = !targetTweetObj.isRetweeted
+  
+  renderTweet()
+}
+
 function getFeedHtml(){
   let feedHtml = ""
   tweetsData.forEach((tweet) => {
@@ -20,7 +58,7 @@ function getFeedHtml(){
                 <p class="tweet-text">${tweet.tweetText}</p>
                 <div class="tweet-details">
                     <span class="tweet-detail">
-                      <i class="fa-regular fa-comment-dots" data-replie=${tweet.uuid}></i>
+                      <i class="fa-regular fa-comment-dots" data-reply=${tweet.uuid}></i>
                       ${tweet.replies.length}
                     </span>
                     <span class="tweet-detail">
